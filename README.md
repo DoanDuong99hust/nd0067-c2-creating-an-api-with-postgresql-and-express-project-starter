@@ -53,21 +53,12 @@ Before submitting, make sure that your project is complete with a `README.md`. Y
 
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
 
-## Db migration
-### Create script
-- db-migrate create <table name> --sql-file
+# Run app guide
+## Port number for db and server
+- App port number: 3000
+- Server port: 5432
 
-### Create data base
-- db-migrate db:create dev
-
-### Migrate table
-- db-migrate up
-
-## Run app
-- npx tsc
-- node dist/server.js
-
-### .env file
+## Environment variables.
 POSTGRES_HOST=127.0.0.1
 POSTGRES_DB=dev
 POSTGRES_TEST_DB=test
@@ -77,3 +68,19 @@ ENV=dev
 BCRYPT_PASSWORD=secret_bcrypt_password
 SALT_ROUND=10
 TOKEN_SECRET=JHFJKAHFDGAJFGAJDHFGJGkgjhkgjGJHJG
+
+## Package installation instructions.
+- Install node_module: npm install
+
+## Db migration
+### Run database using docker
+- docker compose up -d
+
+### Migrate table using db-migrate
+- npm install -g db-migrate
+- db-migrate up
+- create table migration : db-migrate create <table_name> --sql-file 
+
+## Run app
+- npx tsc
+- node dist/server.js
