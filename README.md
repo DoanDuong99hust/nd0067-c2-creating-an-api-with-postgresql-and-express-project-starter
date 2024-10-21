@@ -66,3 +66,14 @@ Before submitting your project, spin it up and test each endpoint. If each one r
 ## Run app
 - npx tsc
 - node dist/server.js
+
+### .env file
+POSTGRES_HOST=127.0.0.1
+POSTGRES_DB=dev
+POSTGRES_TEST_DB=test
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password123
+ENV=dev
+BCRYPT_PASSWORD=secret_bcrypt_password
+SALT_ROUND=10
+TOKEN_SECRET=JHFJKAHFDGAJFGAJDHFGJGkgjhkgjGJHJG
