@@ -49,7 +49,6 @@ export class UserStore {
                 u.password + pepper, 
                 parseInt(saltRounds!)
               );
-              console.log(u);
               
             const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash])
             
@@ -60,6 +59,20 @@ export class UserStore {
             return user
         } catch (err) {
             throw new Error(`Could not add new user ${u.first_name + u.last_name}. Error: ${err}`)
+        }
+    }
+
+    async truncate() {
+        try {
+            const sql = 'TRUNCATE user_ RESTART IDENTITY CASCADE'
+            // @ts-ignore
+            const conn = await Client.connect()
+        
+            await conn.query(sql)
+        
+            conn.release()
+        } catch (err) {
+            throw new Error(`Could not truncate data. Error: ${err}`)
         }
     }
 

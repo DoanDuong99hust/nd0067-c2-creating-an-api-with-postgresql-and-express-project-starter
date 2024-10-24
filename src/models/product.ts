@@ -54,4 +54,18 @@ export class ProductStore {
             throw new Error(`Could not add new book ${p.name}. Error: ${err}`)
         }
     }
+
+    async truncate() {
+        try {
+            const sql = 'TRUNCATE product RESTART IDENTITY CASCADE'
+            // @ts-ignore
+            const conn = await Client.connect()
+        
+            await conn.query(sql)
+        
+            conn.release()
+        } catch (err) {
+            throw new Error(`Could not truncate data. Error: ${err}`)
+        }
+    }
 }

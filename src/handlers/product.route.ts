@@ -6,13 +6,23 @@ import { tokenSecret } from '../database'
 const store = new ProductStore()
 
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index()
-  res.json(products)
+  try {
+    const products = await store.index()
+    res.json(products)
+  } catch (error) {
+    res.status(404)
+    res.json('Dont have any product')
+  }
 }
 
 const show = async (req: Request, res: Response) => {
-   const product = await store.show(+req.params.id)
-   res.json(product)
+  try {
+    const product = await store.show(+req.params.id)
+    res.json(product)
+  } catch (error) {
+    res.status(404)
+    res.json('Cannot find product: ' + +req.params.id)
+  }
 }
 
 const create = async (req: Request, res: Response) => {

@@ -8,13 +8,23 @@ const store = new OrdersStore();
 const orderProductStore = new OrdersProductStore();
 
 const index = async (_req: Request, res: Response) => {
-  const orders = await store.index()
-  res.json(orders)
+    try {
+        const orders = await store.index()
+        res.json(orders)
+    } catch (error) {
+        res.status(404)
+        res.json('Dont have any order')
+    }
 }
 
 const show = async (req: Request, res: Response) => {
-   const order = await store.show(+req.params.id)
-   res.json(order)
+    try {
+        const order = await store.show(+req.params.id)
+        res.json(order)
+    } catch (error) {
+        res.status(404)
+        res.json('Cannot find order: ' + +req.params.id)
+    }
 }
 
 const showByUser = async (req: Request, res: Response) => {
@@ -56,17 +66,11 @@ const create = async (req: Request, res: Response) => {
     }
 }
 
-const destroy = async (req: Request, res: Response) => {
-    const deleted = await store.delete(req.body.id)
-    res.json(deleted)
-}
-
 const ordersRoutes = (app: express.Application) => {
   app.get('/orders', index)
   app.get('/orders/:id', show)
   app.get('/orders/user/:user_id', showByUser)
   app.post('/orders', create)
-  app.delete('/orders/:id', destroy)
 }
 
 export default ordersRoutes
