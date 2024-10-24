@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import { Orders, OrdersStore } from '../models/orders'
 import { OrdersProduct, OrdersProductStore } from '../models/orders_product'
 import jwt from 'jsonwebtoken'
+import { tokenSecret } from '../database';
 
 const store = new OrdersStore();
 const orderProductStore = new OrdersProductStore();
@@ -20,7 +21,7 @@ const showByUser = async (req: Request, res: Response) => {
     try {
         const authorizationHeader = req.headers.authorization
         const token = authorizationHeader!.split(' ')[1]
-        jwt.verify(token, token)
+        jwt.verify(token, tokenSecret!)
       } catch(err) {
           res.status(401)
           res.json('Access denied, invalid token')

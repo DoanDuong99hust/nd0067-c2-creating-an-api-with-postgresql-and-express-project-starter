@@ -8,7 +8,7 @@ const index = async (req: Request, res: Response) => {
     try {
         const authorizationHeader = req.headers.authorization
         const token = authorizationHeader!.split(' ')[1]
-        jwt.verify(token, token)
+        jwt.verify(token, tokenSecret!)
     } catch(err) {
         res.status(401)
         res.json('Access denied, invalid token')
@@ -22,7 +22,8 @@ const show = async (req: Request, res: Response) => {
     try {
         const authorizationHeader = req.headers.authorization
         const token = authorizationHeader!.split(' ')[1]
-        jwt.verify(token, token)
+        
+        jwt.verify(token, tokenSecret!)
     } catch(err) {
         res.status(401)
         res.json('Access denied, invalid token')
@@ -40,10 +41,9 @@ const create = async (req: Request, res: Response) => {
             username: req.body.username,
             password: req.body.password
         }
-        console.log(req.body);
         
         const newUser = await store.create(user)
-        var token =  jwt.sign({ user: newUser }, tokenSecret!);
+        var token =  jwt.sign({ _id: newUser.id, _first_name: newUser.first_name, _last_name: newUser.last_name }, tokenSecret!);
         res.json(token)
     } catch(err) {
         res.status(400)
@@ -54,7 +54,7 @@ const create = async (req: Request, res: Response) => {
 const authenticate = async (req: Request, res: Response) => {
     try {
         const user = await store.authenticate(req.body.usename, req.body.password)
-        var token = jwt.sign({ user: user }, tokenSecret!);
+        var token = jwt.sign({ u_id: user?.id, _first_name: user?.first_name, _last_name: user?.last_name }, tokenSecret!);
         res.json(token)
     } catch(err) {
         res.status(400)

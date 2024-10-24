@@ -14,4 +14,21 @@ describe("User Model", () => {
     it('should have a create method', () => {
       expect(store.create).toBeDefined();
     });
+
+    it('create method should add a user', async () => {
+      const result = await store.create({
+        id: 0,
+        first_name: 'first name 1',
+        last_name: 'last name 1',
+        username: 'ad',
+        password: '1'
+      });
+      expect(result).toEqual({
+        id: 1,
+        first_name: 'first name 1',
+        last_name: 'last name 1',
+        username: 'ad',
+        password: '1'
+      });
+    });
   });

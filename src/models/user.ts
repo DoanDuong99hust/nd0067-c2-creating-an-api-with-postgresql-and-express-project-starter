@@ -51,9 +51,8 @@ export class UserStore {
               );
               console.log(u);
               
-            const result = await conn
-                .query(sql, [u.first_name, u.last_name, u.username, hash])
-        
+            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash])
+            
             const user = result.rows[0]
         
             conn.release()
@@ -69,7 +68,6 @@ export class UserStore {
         const sql = 'SELECT password FROM user_ WHERE username=($1)'
     
         const result = await conn.query(sql, [username])
-        console.log(result.rows);
         
         if(result.rows.length) {
     
