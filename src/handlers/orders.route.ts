@@ -37,7 +37,7 @@ const showByUser = async (req: Request, res: Response) => {
           res.json('Access denied, invalid token')
           return
       }
-    const order = await store.showByUserId(+req.params.id)
+    const order = await store.showByUserId(+req.params.user_id)
     res.json(order)
 }
 
